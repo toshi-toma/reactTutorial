@@ -1,0 +1,16 @@
+{
+  "name": "reactTutorial",
+  "version": "1.0.0",
+  "description": "React Tutorial",
+  "author": "10shi10ma (https://github.com/10shi10ma)",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "^1.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build"
+  }
+}
