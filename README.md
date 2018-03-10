@@ -76,3 +76,42 @@ Reactの公式チュートリアルでは、最低限のHTML、JS、CSSが提供
 > yarn start
 ```
 [http://localhost:3000/](http://localhost:3000/)がブラウザで開かれて、3 * 3のテーブルが表示されていると思います。
+
+# step3 BoardコンポーネントからSquareコンポーネントにデータを渡す
+step2が完了した時点で、3つのReactのコンポーネントが定義された状態になっています。
+- Square Component: 単一の```<button>```をレンダリングするコンポーネント
+- Board Component: 9つの四角形をレンダリングするコンポーネント
+- Game Component: 後で記入するプレースホルダをボードにレンダリングするコンポーネント
+
+***
+
+BoardコンポーネントからSquareコンポーネントへデータを渡します。  
+renderSquareメソッド内を```<Square />;```から```<Square value={i}/>;```に書き換えてください。
+```js
+class Board extends React.Component {
+  renderSquare(i) {
+    return <Square value={i}/>;
+  }
+```
+
+***
+
+Squareコンポーネントのrenderメソッドで```{/* TODO */}```となっている箇所を```{this.props.value}```に書き換えてください。  
+コンポーネント内では、```props```というオブジェクトを通して受け取ったデータへアクセスします。
+```js
+class Square extends React.Component {
+  render() {
+    return (
+      <button className="square">
+        {this.props.value}
+      </button>
+    );
+  }
+}
+```
+
+***
+
+これで、各四角形の中に1~9の数字が表示されるようになりました。  
+
+[step3での変更点](https://github.com/10shi10ma/reactTutorial/commit/e57c66009cf0e7ae4b5ebc7525489c233c242f74)
