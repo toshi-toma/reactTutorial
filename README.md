@@ -115,3 +115,47 @@ class Square extends React.Component {
 これで、各四角形の中に1~9の数字が表示されるようになりました。  
 
 [step3での変更点](https://github.com/10shi10ma/reactTutorial/commit/e57c66009cf0e7ae4b5ebc7525489c233c242f74)
+
+# Step4 Squareコンポーネントに状態を持たせる
+Squareコンポーネントをクリックすると "X"が表示されるようにしましょう。  
+
+***
+
+Reactコンポーネントはコンストラクタ内でthis.stateを設定することでコンポーネントが状態(state)を持つことができます。正方形の現在の状態(state)を保存し、正方形がクリックされたときにそれを変更しましょう。
+
+***
+
+まず、Squareコンポーネントクラスにコンストラクタを追加してstateを初期化します。  
+constructorの内容は以下のようにしてください。
+```js
+class Square extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: null,
+    };
+  }
+```
+これでSquareコンポーネントが状態(state)を持つことができるようになりました。
+
+***
+
+次に、Squareコンポーネントのrenderメソッドを書き換えます。  
+これまでpropsを参照していたのを、stateを参照するようにします。  
+```<button>```タグ内の```this.props.value```を```this.state.value```に変更してください。
+
+***
+
+あとは、Squareコンポーネントをクリックした時の動作を記述します。
+renderメソッド内のbuttonタグを以下の内容に変更してください。
+```js
+<button className="square" onClick={() => this.setState({value: 'X'})}>
+```
+this.setStateが呼び出されると、渡されたstateでコンポーネントの状態が更新されて再レンダリングされます。
+
+***
+
+任意の正方形をクリックすると、その中にXが表示されるようになりました。
+
+[step4での変更点](https://github.com/10shi10ma/reactTutorial/commit/971fd55d6c7c8c5315a89a2c64288c4336ac6f86)
+
