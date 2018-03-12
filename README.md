@@ -159,3 +159,33 @@ this.setStateが呼び出されると、渡されたstateでコンポーネン�
 
 [step4での変更点](https://github.com/10shi10ma/reactTutorial/commit/971fd55d6c7c8c5315a89a2c64288c4336ac6f86)
 
+# step5 親コンポーネントで状態を管理する
+各Squareの状態を管理するために、Boardで各Square Componentのstateを持つようにします。
+このようにReactでは、複数の子Componentからデータを集計したり子コンポーネントが相互にやりとりする場合は、親コンポーネントでstateを持つようにします。
+
+***
+
+Board Componentにコンストラクタを追加し、9つの正方形に対応する配列を持つ初期状態をstateに設定するように変更してください。
+```js
+class Board extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      squares: Array(9).fill(null),
+    };
+  }
+```
+
+***
+
+あとは、Square Componentに渡すデータをpropsから自身が持っているstateに変更します。
+Board ComponentのrenderSquareメソッドの中身を以下のように変更してください。
+```js
+renderSquare(i) {
+  return <Square value={this.state.squares[i]} />;
+}
+```
+
+***
+
+[step5での変更点](https://github.com/10shi10ma/reactTutorial/commit/affcaa8efbc99d94345843b2b1aa6642bc463a2c)
