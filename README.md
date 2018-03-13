@@ -237,3 +237,23 @@ class Square extends React.Component {
 
 
 [step6での変更点](https://github.com/10shi10ma/reactTutorial/commit/f55d9222978bf34f6f9c7364ae6c535572b3f341)
+
+# step7 親のstateを更新するメソッドを追加
+Square Componentがクリックされた時に呼ばれるhandleClickメソッドをBoard Componentに実装します。
+以下の内容でhandleClickメソッドを追加してください。
+```js
+handleClick(i) {
+  const squares = this.state.squares.slice();
+  squares[i] = 'X';
+  this.setState({squares: squares});
+}
+```
+
+***
+
+これでSquare Componentはstateを保持しません。  
+Square Componentは、親コンポーネントのBoard Componentから値を受け取り、クリックされたときに親に通知するようになりました。
+
+***
+
+[step7での変更点](https://github.com/10shi10ma/reactTutorial/commit/6f96c21486bd6d5f904e2f46c05abc1b64627da7)
