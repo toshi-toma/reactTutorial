@@ -189,3 +189,51 @@ renderSquare(i) {
 ***
 
 [step5での変更点](https://github.com/10shi10ma/reactTutorial/commit/affcaa8efbc99d94345843b2b1aa6642bc463a2c)
+
+# step6 親コンポーネントの状態を更新する準備
+Boardコンポーネントで、どの正方形が塗りつぶされているかを保存したいです。  
+なのでSquare Componentが塗りつぶされた際、Board Componentのstateを更新する必要があります。
+しかしコンポーネントのstateはプライベートなデータなので、Board ComponentのstateをSquare Componentから直接更新することはできません。
+
+***
+
+Reactで一般的なパターンは、正方形をクリックすると呼び出される関数をBoard ComponentからSquare Componentに渡します。  
+Board ComponentのrenderSquareメソッドを以下の内容に書き換えてください。
+
+```js
+renderSquare(i) {
+  return (
+    <Square
+      value={this.state.squares[i]}
+      onClick={() => this.handleClick(i)}
+    />
+  );
+}
+```
+
+***
+
+Board Componentから受け取った関数を利用するようにSquare Componentのrenderメソッドを書き換えます。また、Boardでstateを保存するのでSquare Componentはstateを持たなくなります。よってSquare Componentからコンストラクタ定義を削除してください。
+
+***
+
+Square Componentの内容を以下の通りに変更してください。
+```js
+class Square extends React.Component {
+  render() {
+    return (
+      <button className="square" onClick={() => this.props.onClick()}>
+        {this.props.value}
+      </button>
+    );
+  }
+}
+```
+
+***
+
+これで、正方形をクリックした際に、```<button>```のonClickに指定された```() => this.props.onClick()```関数が実行されます。  
+```this.props.onClick()```はBoard Componentから渡された関数なので、実際は、Board Componentの```() => this.handleClick(i)```関数が実行されます。
+
+
+[step6での変更点](https://github.com/10shi10ma/reactTutorial/commit/f55d9222978bf34f6f9c7364ae6c535572b3f341)
