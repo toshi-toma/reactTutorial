@@ -266,3 +266,24 @@ Reactのチュートリアルでは、「不変性(Immutability)が重要な理�
 ***
 
 [React Tutorial|Why Immutability Is Important](https://reactjs.org/tutorial/tutorial.html#why-immutability-is-important)
+
+# step8 functional componentsにする
+Square Componentはrenderメソッドのみ持っているので、```React.Component```を継承したクラスをやめて、functional componentsにします。  
+functional componentsは単にpropsをとり、レンダリングすべきものを返す関数を書くだけです。
+
+***
+
+Squareコンポーネントの内容を以下のように変更してください。
+```js
+function Square(props) {
+  return (
+    <button className="square" onClick={props.onClick}>
+      {props.value}
+    </button>
+  );
+}
+```
+
+***
+
+[step8での変更点](https://github.com/10shi10ma/reactTutorial/commit/81975726ac719fcc276442328dad6a8303dc4cfc)
