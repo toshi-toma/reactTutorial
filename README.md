@@ -257,3 +257,12 @@ Square Componentは、親コンポーネントのBoard Componentから値を受�
 ***
 
 [step7での変更点](https://github.com/10shi10ma/reactTutorial/commit/6f96c21486bd6d5f904e2f46c05abc1b64627da7)
+
+# step7.5 不変性(Immutability)の重要性
+step7で紹介したように、.slice（）演算子を使用して変更を加える前に正方形の配列をコピーし、既存の配列の変更を行いませんでした。  
+Reactのチュートリアルでは、「不変性(Immutability)が重要な理由」を説明しています。  
+興味がある人は是非読んでみてください。  
+
+***
+
+[React Tutorial|Why Immutability Is Important](https://reactjs.org/tutorial/tutorial.html#why-immutability-is-important)
