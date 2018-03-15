@@ -337,3 +337,72 @@ render() {
 ***
 
 [step9での変更点](https://github.com/10shi10ma/reactTutorial/commit/ea0b27dfbe04c1ef118a99b238f67e1c7884b0f7)
+
+# step10 勝敗を判定する
+まず始めに、以下のヘルパー関数をindex.js内に追加してください。
+```js
+function calculateWinner(squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
+}
+```
+
+この関数は、配列のsquaresを渡すと、ゲームの勝敗がついている場合は、そのユーザー文字。ついていない場合はnullを返します。  
+
+***
+
+Square Componentのrenderメソッドで、勝敗が決まった場合はステータス文字に勝者を。決まっていない場合はステータス文字に、次のユーザーを表示できます。  
+renderメソッドの内容を以下を参考に変更してください。
+```js
+render() {
+    const winner = calculateWinner(this.state.squares);
+    let status;
+    if (winner) {
+      status = 'Winner: ' + winner;
+    } else {
+      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    }
+    // ..
+```
+
+***
+
+最後に、勝敗が決まっている場合は正方形をクリックしても何も起こらないようにします。  
+handleClickメソッドの処理を以下のように変更します。
+```js
+handleClick(i) {
+  const squares = this.state.squares.slice();
+  if (calculateWinner(squares) || squares[i]) {
+    return;
+  }
+  squares[i] = this.state.xIsNext ? 'X' : 'O';
+  this.setState({
+    squares: squares,
+    xIsNext: !this.state.xIsNext,
+  });
+}
+```
+
+***
+
+これでゲームは完成しました！
+
+***
+
+
+[step10での変更点](https://github.com/10shi10ma/reactTutorial/commit/21401723b1df58c97daddb1287630876dfde5784)
