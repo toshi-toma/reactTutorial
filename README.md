@@ -287,3 +287,53 @@ function Square(props) {
 ***
 
 [step8での変更点](https://github.com/10shi10ma/reactTutorial/commit/81975726ac719fcc276442328dad6a8303dc4cfc)
+
+# step9 stateを追加する
+今は正方形をクリックすると、必ずXの文字が正方形に表示されます。このチュートリアルで作っているゲームでは、XとOをの2つのユーザーが交代交代で正方形をクリックします。  
+なので、Board Componentにターンの概念を追加します。  
+
+***
+
+Board Componentのconstructorのstateの初期状態を以下のように変更してください。
+```js
+constructor(props) {
+  super(props);
+  this.state = {
+    squares: Array(9).fill(null),
+    xIsNext: true,
+  };
+}
+```
+
+***
+
+正方形がクリックされた際に表示する文字をxIsNextの値に応じて変化させます。  
+またクリックされる度に、xIsNextの値を反転させて、stateを保存することによってxIsNextをトグルします。   
+handleClickの処理を以下のように変更してください。
+```js
+handleClick(i) {
+  const squares = this.state.squares.slice();
+  squares[i] = this.state.xIsNext ? 'X' : 'O';
+  this.setState({
+    squares: squares,
+    xIsNext: !this.state.xIsNext,
+  });
+}
+```
+
+***
+
+Board Componentのrenderメソッドで指定したステータステキストを変更して、次のターンが誰かを表示します。
+```js
+render() {
+    const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    //..
+```
+
+***
+
+これでBoard Componentにターンの概念が追加されました。
+
+***
+
+[step9での変更点](https://github.com/10shi10ma/reactTutorial/commit/ea0b27dfbe04c1ef118a99b238f67e1c7884b0f7)
