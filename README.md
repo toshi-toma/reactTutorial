@@ -465,3 +465,100 @@ class Game extends React.Component {
 
 
 [step11での変更点](https://github.com/10shi10ma/reactTutorial/commit/ea4e0cf42ac8cb78bf79f90a36d230951b679dfa)
+
+# step12 トップレベルのコンポーネントにクリックハンドラや計算処理を引き上げる
+現在Board Componentにあるstatusの計算と正方形をクリックされた時の処理をGame Componentに移しましょう。
+
+***
+
+step11でGame Componentにボードの状態やターンを持ってきたので、statusの計算や現在のボードの状態をBoard Componentに渡すようにします。  
+Game Componentのrenderメソッドを以下を参考に変更してください。
+```js
+render() {
+  const history = this.state.history;
+  const current = history[history.length - 1];
+  const winner = calculateWinner(current.squares);
+
+  let status;
+  if (winner) {
+    status = 'Winner: ' + winner;
+  } else {
+    status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+  }
+
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board
+          squares={current.squares}
+          onClick={(i) => this.handleClick(i)}
+        />
+
+      </div>
+      <div className="game-info">
+        <div>{status}</div>
+        <ol>{/* TODO */}</ol>
+      </div>
+    </div>
+  );
+}
+```
+
+***
+
+これでBoard Componentから```<div className = "status"> {status} </ div>```とstatusを計算するコードを削除できます。  
+Board Componentのrenderメソッドは以下のようになります。
+```js
+render() {
+  return (
+    <div>
+      <div className="board-row">
+        {this.renderSquare(0)}
+        {this.renderSquare(1)}
+        {this.renderSquare(2)}
+      </div>
+      <div className="board-row">
+        {this.renderSquare(3)}
+        {this.renderSquare(4)}
+        {this.renderSquare(5)}
+      </div>
+      <div className="board-row">
+        {this.renderSquare(6)}
+        {this.renderSquare(7)}
+        {this.renderSquare(8)}
+      </div>
+    </div>
+  );
+}
+```
+
+***
+
+次にhandleClickメソッドをBoard ComponentからGame Componentに移す必要があります。  
+この際、最新のsquaresをhistoryオブジェクトに追加する処理を加えています。  
+Game ComponentのhandleClickメソッドを以下を参考に変更してください。  
+```js
+handleClick(i) {
+  const history = this.state.history;
+  const current = history[history.length - 1];
+  const squares = current.squares.slice();
+  if (calculateWinner(squares) || squares[i]) {
+    return;
+  }
+  squares[i] = this.state.xIsNext ? 'X' : 'O';
+  this.setState({
+    history: history.concat([{
+      squares: squares,
+    }]),
+    xIsNext: !this.state.xIsNext,
+  });
+}
+```
+
+***
+
+これでBoard ComponentはrenderSquareメソッドとrenderメソッドだけになりました。stateの初期化とクリックハンドラは両方ともGame Componentに存在することになります。
+
+***
+
+[step12での変更点](https://github.com/10shi10ma/reactTutorial/commit/ec80b7efac6788b314baac827434ff00e702c03c)
