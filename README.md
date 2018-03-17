@@ -406,3 +406,62 @@ handleClick(i) {
 
 
 [step10での変更点](https://github.com/10shi10ma/reactTutorial/commit/21401723b1df58c97daddb1287630876dfde5784)
+
+# step11 トップレベルのコンポーネントにstateを引き上げる
+ゲームが完成したので、これから、ボードの古い状態に戻って以前の動き(history)を見ることができるようにしましょう。
+
+***
+
+以下のようなオブジェクトをstateとして保持しましょう。
+```js
+history = [
+  {
+    squares: [
+      null, null, null,
+      null, null, null,
+      null, null, null,
+    ]
+  },
+  {
+    squares: [
+      null, null, null,
+      null, 'X', null,
+      null, null, null,
+    ]
+  },
+  // ...
+]
+```
+
+***
+
+トップレベルのGame Componentがhistoryの表示を担当するようにします。
+step5以降で、Square ComponentからBoard Componentに管理する情報(state)を引き上げたように、今回はBoard ComponentからGame Componentにstateを引き上げます。これでトップレベルのGame Componentで必要なすべての情報を得ることができます。
+
+***
+
+まず最初に、Game Componentにコンストラクタを追加してGameの初期状態を設定します。
+以下を参考にコンストラクタを追加してください。
+```js
+class Game extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      history: [{
+        squares: Array(9).fill(null),
+      }],
+      xIsNext: true,
+    };
+  }
+  // ..
+```
+
+***
+
+不要になったBoard Componentのstateを削除します。
+まず、Board Componentのコンストラクタを削除してください。
+次に、renderSquareメソッドではstateではなく、propsからデータにアクセスするようにします。
+なので```this.state.squares[i]```を```this.props.squares[i]```に、```this.handleClick(i)```を```this.props.onClick(i)```に変更してください。
+
+
+[step11での変更点](https://github.com/10shi10ma/reactTutorial/commit/ea4e0cf42ac8cb78bf79f90a36d230951b679dfa)
