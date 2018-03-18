@@ -646,3 +646,88 @@ const moves = history.map((step, move) => {
 ***
 
 [step14での変更点](https://github.com/10shi10ma/reactTutorial/commit/51b2a555477bac26f7e016789928676bb604399e)
+
+# step15 イベントハンドラですべてのstateを更新する
+step13で作成した、ステップボタンのクリックハンドラとして定義したjumpToメソッドを作成します。
+
+***
+
+まずは、Game Componentのstateに現在表示しているステップを追加します。  
+以下を参考にGame Componentのコンストラクタを変更してください。
+```js
+class Game extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      history: [{
+        squares: Array(9).fill(null),
+      }],
+      stepNumber: 0,
+      xIsNext: true,
+    };
+  }
+```
+
+***
+
+次に、ゲームでstepNumberを更新するjumpToメソッドを定義します。  
+また、その際はxIsNextを更新します。移動番号のインデックスが偶数の場合、xIsNextをtrueに設定します。
+以下を参考に、Game ComponentにjumpToメソッドを追加してください。
+```js
+handleClick(i) {
+  // this method has not changed
+}
+
+jumpTo(step) {
+  this.setState({
+    stepNumber: step,
+    xIsNext: (step % 2) === 0,
+  });
+}
+
+render() {
+  // this method has not changed
+}
+```
+
+***
+
+正方形をクリックした際に、各stateを更新するようにします。  
+以下を参考に、handleClickメソッドを変更してください。
+```js
+handleClick(i) {
+  const history = this.state.history.slice(0, this.state.stepNumber + 1);
+  const current = history[history.length - 1];
+  const squares = current.squares.slice();
+  if (calculateWinner(squares) || squares[i]) {
+    return;
+  }
+  squares[i] = this.state.xIsNext ? 'X' : 'O';
+  this.setState({
+    history: history.concat([{
+      squares: squares
+    }]),
+    stepNumber: history.length,
+    xIsNext: !this.state.xIsNext,
+  });
+}
+```
+
+***
+
+これで、stepNumberを参照することで、Gameの状態を表示することができます。  
+Game Componentのrenderメソッドを以下を参考に変更してください。
+```js
+render() {
+  const history = this.state.history;
+  const current = history[this.state.stepNumber];
+  const winner = calculateWinner(current.squares);
+```
+
+***
+
+「 Go to」ボタンをクリックすると、Board Componentはすぐに更新され、その時のゲームの様子が表示されます。
+
+***
+
+[step15での変更点](https://github.com/10shi10ma/reactTutorial/commit/1e7c7c657eebbb53e3a23f4ad25ddd69c954eae9)
