@@ -731,3 +731,9 @@ render() {
 ***
 
 [step15での変更点](https://github.com/10shi10ma/reactTutorial/commit/1e7c7c657eebbb53e3a23f4ad25ddd69c954eae9)
+
+# 最後に
+これで、React Tutorialは終了です。  
+このTutorialでは、Reactのコンセプトである、 componentやprops、stateについて触れました。  
+それぞれの詳細についてはdocumentを参照してください。
+[React document](https://reactjs.org/docs/hello-world.html)
