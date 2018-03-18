@@ -562,3 +562,59 @@ handleClick(i) {
 ***
 
 [step12での変更点](https://github.com/10shi10ma/reactTutorial/commit/ec80b7efac6788b314baac827434ff00e702c03c)
+
+# step13 複数の要素を表示する
+次は、操作履歴を表示します。  
+
+***
+
+正方形をクリックした操作履歴の各ステップを、ボタン```<button>```を含むリストアイテム```<li>```として作成します。  
+Game Componentのrenderメソッドを以下を参考に変更してください。
+```js
+render() {
+  const history = this.state.history;
+  const current = history[history.length - 1];
+  const winner = calculateWinner(current.squares);
+
+  const moves = history.map((step, move) => {
+    const desc = move ?
+      'Go to move #' + move :
+      'Go to game start';
+    return (
+      <li>
+        <button onClick={() => this.jumpTo(move)}>{desc}</button>
+      </li>
+    );
+  });
+
+  let status;
+  if (winner) {
+    status = 'Winner: ' + winner;
+  } else {
+    status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+  }
+
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board
+          squares={current.squares}
+          onClick={(i) => this.handleClick(i)}
+        />
+      </div>
+      <div className="game-info">
+        <div>{status}</div>
+        <ol>{moves}</ol>
+      </div>
+    </div>
+  );
+}
+```
+
+***
+
+Reactでは、複数の同じ要素を表示する場合に、配列のmapを活用します。
+
+***
+
+[step13での変更点](https://github.com/10shi10ma/reactTutorial/commit/ba5293bd2b4cb583d5bafb5be4043e8b4e679cca)
