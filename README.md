@@ -618,3 +618,31 @@ Reactでは、複数の同じ要素を表示する場合に、配列のmapを活
 ***
 
 [step13での変更点](https://github.com/10shi10ma/reactTutorial/commit/ba5293bd2b4cb583d5bafb5be4043e8b4e679cca)
+
+# step14 keyを指定する
+現在、以下の警告が表示されます。
+
+```
+Warning: Each child in an array or iterator should have a unique “key” prop. Check the render method of “Game”.
+```
+
+***
+
+これを解消するために、```<li>```にkeyを指定します。  
+以下を参考にkeyを指定するように変更してください。
+```js
+const moves = history.map((step, move) => {
+  const desc = move ?
+    'Go to move #' + move :
+    'Go to game start';
+  return (
+    <li key={move}>
+      <button onClick={() => this.jumpTo(move)}>{desc}</button>
+    </li>
+  );
+});
+```
+
+***
+
+[step14での変更点](https://github.com/10shi10ma/reactTutorial/commit/51b2a555477bac26f7e016789928676bb604399e)
